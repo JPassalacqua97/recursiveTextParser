@@ -66,7 +66,8 @@ rdp::rdp ():alphabet
 
 ,s("")
 {
-   "";}
+
+}
 int i = 0;
 int setLookAheadPosition = 0;
 int lookAheadPosition = 0;
@@ -78,9 +79,9 @@ rdp::~rdp()
 
 
 bool rdp:: parseString(string s){
-	    
+	   
 	     setLookAheadPosition(0);
-	    	 return A() || A();
+	    	 return A();
 	}
 	//special override dont use unless in return regex
 
@@ -372,6 +373,15 @@ int
 main()
 {
     string str = "a=1";
+    string str2 = "a=1+2";
+    string str3 = "a=(1)";
   rdp *algorithm = new rdp();
-  algorithm->parseString(str);
+ // algorithm->parseString(str);
+  
+  if(algorithm->parseString(str)) {
+          	cout << "The string \""+ str +"\" is in the language. \n";
+          }
+          else {
+          	cout << "The string \""+ str +"\" is not in the language.\n";
+          }
 }
