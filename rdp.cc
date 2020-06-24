@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 
 using namespace std;
@@ -8,7 +9,8 @@ public:
 bool parseString(string); 
 int main(void);
 rdp(); 
-~rdp(); 
+~rdp();
+
 
 private:
 
@@ -31,7 +33,7 @@ bool lookAheadIsInOoperators();
 bool lookAheadIsInDigits();
 void incrementLookAheadPosition();
 int getLookAheadPosition();
-//int getLookAheadPosition(int);
+int getLookAheadPosition(int);
 bool getLookAheadPositions(int);
 char getLookAheadCharacter();
 bool isLookAheadPositionValid();
@@ -39,11 +41,11 @@ bool isLookAheadPositionValid(int);
 bool lookAheadIsInAlphabet();
 bool setLookAheadPosition(int);
 int i;
-string s;
 char alphabet[26];
 char digits[10];
 char Uoperators[3];
 char Ooperators[4];
+string s;
 
 };
 
@@ -66,7 +68,7 @@ rdp::rdp ():alphabet
 
 ,s("")
 {
-
+    "";
 }
 int i = 0;
 int setLookAheadPosition = 0;
@@ -78,10 +80,11 @@ rdp::~rdp()
 
 
 
-bool rdp:: parseString(string s){
-	   
+bool rdp:: parseString(string text){
+	    s = text;
+	    //cout << "String: "+text;
 	     setLookAheadPosition(0);
-	    	 return A();
+	    	 return A() || A();
 	}
 	//special override dont use unless in return regex
 
@@ -303,7 +306,7 @@ bool rdp:: lookAheadIsInDigits(){
 	    return false;
 	}
 	
-bool rdp:: isLookAheadPositionValid(int i) {
+bool rdp:: isLookAheadPositionValid(int){
 		 if (i<s.length()) {
 			 lookAheadPosition =i;
 	        return true;
@@ -316,7 +319,7 @@ bool rdp:: isLookAheadPositionValid(int i) {
 	
 bool rdp:: setLookAheadPosition(int i){
 		if(getLookAheadPositions(i)) {
-	    lookAheadPosition =i;
+	    lookAheadPosition = i;
 	    return false;
 		}
 		return true;
@@ -372,16 +375,29 @@ string rdp:: printParseString(){
 int
 main()
 {
-    string str = "a=1";
-    string str2 = "a=1+2";
-    string str3 = "a=(1)";
+  // string myfile = myfile;
+  //  myfile.open("output.txt")
+  //  document.open("input.txt")
   rdp *algorithm = new rdp();
  // algorithm->parseString(str);
-  
-  if(algorithm->parseString(str)) {
-          	cout << "The string \""+ str +"\" is in the language. \n";
+    string myText;
+    ifstream infile("input.txt");
+
+   ofstream outfile("output.txt");
+
+    while (getline(infile, myText)) {
+          if(algorithm->parseString(myText)) {
+              cout << myText;
+          outfile << ("The string "+ myText +" is in the language.\n");
           }
           else {
-          	cout << "The string \""+ str +"\" is not in the language.\n";
+              cout << myText.length();
+          outfile << ("The string "+ myText +" is not in the language.\n");
           }
+      }
+    outfile.close(); 
+    infile.close();
+    cout <<"done"<<endl;
+
+    return 0;
 }
